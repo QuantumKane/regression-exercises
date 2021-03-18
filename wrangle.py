@@ -96,7 +96,7 @@ def clean_zillow(df):
     df = df.rename(columns={"bedroomcnt": "bedrooms", "bathroomcnt": "bathrooms", "calculatedfinishedsquarefeet": "square_feet", 
                         "taxamount": "taxes", "regionidzip": "zip_code", "taxvaluedollarcnt": "tax_value", 
                         "yearbuilt": "year_built", "regionidcounty": "county"})
-    df = df.set_index("parcel_id")
+    df = df.set_index("parcelid")
     df = df.dropna()
     
     upper_bound, lower_bound = remove_outlier(df, "tax_value")
