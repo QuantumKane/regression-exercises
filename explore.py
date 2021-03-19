@@ -17,6 +17,7 @@ def plot_variable_pairs():
     g = sns.PairGrid(df)
     g.map_diag(plt.hist)
     g.map_offdiag(sns.regplot)
+    
     return g
 
 def plot_residual(target, yhat):
@@ -31,5 +32,6 @@ def plot_residual(target, yhat):
     plt.xlabel("target")
     plt.ylabel("residual")
     plt.title("OLS Residual Plot")
-    plt.show()
+    
+    return plt.show()
 
