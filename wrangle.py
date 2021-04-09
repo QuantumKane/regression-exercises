@@ -78,9 +78,9 @@ def get_zillow_data():
                 SELECT * 
                 FROM properties_2017
                 JOIN predictions_2017 USING(parcelid)
-                WHERE transactiondate BETWEEN "2017-05-01" AND "2017-06-30"
+                WHERE transactiondate BETWEEN "2017-05-01" AND "2017-08-31"
                 AND propertylandusetypeid = 261
-                LIMIT 5000;
+                LIMIT 7000;
                 """
     return pd.read_sql(sql_query,get_connection('zillow'))
 
@@ -97,7 +97,10 @@ def clean_zillow(df):
                         "taxamount": "taxes", "regionidzip": "zip_code", "taxvaluedollarcnt": "tax_value", 
                         "yearbuilt": "year_built", "regionidcounty": "county"})
     df = df.set_index("parcelid")
-    df = df.dropna()
+    #df = df.dropna()
+    
+    # Dropping unnecessary columns
+    df = df.drop(['airconditioningtypeid', 'architecturalstyletypeid', 'basementsqft', 'taxdelinquencyyear', 'taxdelinquencyflag'],axis=1)
     
     upper_bound, lower_bound = remove_outlier(df, "tax_value")
     df = df[df.tax_value < upper_bound]
@@ -115,7 +118,6 @@ def remove_outlier(df, feature):
     - uses their diference to calculate the IQR
     - uses the IQR to determine upper and lower bounds
     '''
-    
     q1 = df[feature].quantile(.25)
     q3 = df[feature].quantile(.75)
     
