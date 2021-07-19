@@ -1,2 +1,2 @@
 # regression-exercises
-This repo is for the regression module
+This repo is for my work in Codeup's regression module
